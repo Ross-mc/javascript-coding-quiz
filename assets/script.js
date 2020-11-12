@@ -46,9 +46,7 @@ function beginQuiz(event){
     event.preventDefault();
 
     currentQuestionIndex = 0;
-    userScore = 0;
-
-    
+    userScore = 0;  
 
     fadeOut(INIT_CONTAINER);
     createQuestion(currentQuestionIndex);
@@ -92,7 +90,7 @@ function userGuess(event){
 
         }
 
-        fadeOut(QUIZ_CONTAINER)
+        fadeOut(QUIZ_CONTAINER);
 
         currentQuestionIndex++;
         updateScore();
@@ -104,7 +102,7 @@ function userGuess(event){
             fadeIn(QUIZ_CONTAINER);
             createQuestion(currentQuestionIndex);
             createAnswers(currentQuestionIndex);
-        }, 600)
+        }, 600);
     };
 
     
@@ -122,7 +120,7 @@ function finishQuiz(){
 
     if (JSON.parse(localStorage.getItem("scoresArray") !== null)){
         scores = JSON.parse(localStorage.getItem("scoresArray"));
-    }
+    };
 
     //save to localstorage
     let userInitials = USER_NAME_EL.value.toUpperCase().trim();
@@ -146,7 +144,7 @@ function finishQuiz(){
             }
         } if (!hasObjBeenPushed){
             scores.push(userObj);
-        }
+        };
     };
 
     localStorage.setItem("scoresArray", JSON.stringify(scores));
@@ -164,7 +162,7 @@ function finishQuiz(){
     finishedContainer.appendChild(finishedHeader);
 
     let finishedPara = document.createElement("p");
-    finishedPara.textContent = `Your score of ${userScore}/${QUIZ.length} has been added to the high scores`;
+    finishedPara.textContent = `Your score of ${userScore}/${QUIZ.length} has been added to the high scores!`;
     finishedContainer.appendChild(finishedPara);
 
     let viewScoresButton = document.createElement("button");
@@ -180,7 +178,7 @@ function finishQuiz(){
     finishedContainer.appendChild(returnButton);
     
 
-    return
+    return;
 }
 
 function updateScore(){
@@ -210,7 +208,7 @@ function createQuestion(currentQuestionIndex){
 
 function createAnswers(currentQuestionIndex){
     
-    let numOfAnswers = QUIZ[currentQuestionIndex].possibleAnswers.length
+    let numOfAnswers = QUIZ[currentQuestionIndex].possibleAnswers.length;
 
     for (let i = 0; i < numOfAnswers; i++){
         let answerButton = document.createElement("button");
@@ -219,9 +217,9 @@ function createAnswers(currentQuestionIndex){
         let answer = QUIZ[currentQuestionIndex].possibleAnswers[i];
         answerButton.textContent = answer;
         QUIZ_CONTAINER.appendChild(answerButton); 
-    }
+    };
 
-}
+};
 
 
 
@@ -237,7 +235,7 @@ function fadeOut(element){
         }
         element.style.opacity = opacityValue;
         opacityValue -= opacityValue * 0.05
-    }, 10)
+    }, 10);
 };
 
 function fadeIn(element){
@@ -254,8 +252,8 @@ function fadeIn(element){
         } else{
             opacityValue += opacityValue * 0.05;
         }
-    }, 10)
-}
+    }, 10);
+};
 
 
 //click listeners
