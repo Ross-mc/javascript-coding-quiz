@@ -2,9 +2,9 @@
 
 const QUIZ = [
     {
-        question: "Test Question",
-        possibleAnswers: ["a", "b", "c", "d"],
-        correctAnswerIndex: 1
+        question: "Inside which HTML element do we put JavaScript or reference a JavaScript file?",
+        possibleAnswers: ["<javascript>", "<scripting>", "<js>", "<script>"],
+        correctAnswerIndex: 3
     },
     {
         question: "Test Question 2",
@@ -31,6 +31,8 @@ const PROGRESS_DIV = document.querySelector(".progress");
 
 const TIME_BAR_ELEMENT = document.querySelector("#time_bar");
 const TIME_REMAINING_ELEMENT = document.querySelector("#time_label");
+
+let returnBtn;
 
 
 //variables
@@ -69,8 +71,9 @@ function beginQuiz(event){
             TIME_REMAINING_ELEMENT.textContent = timeRemaining / 1000;
         };
 
-        if (timeBarValue === 0){
+        if (timeBarValue <= 0){
             clearInterval(timer);
+            finishQuiz(timeBarValue);
         }
     }, 20);
 
@@ -80,13 +83,33 @@ function userGuess(event){
     if (event.target.matches("button")){
         let userClickedId = parseInt(event.target.getAttribute("data-index"));
 
+        scoreParaEl = document.querySelector("#score_para")
+
         if (userClickedId === QUIZ[currentQuestionIndex].correctAnswerIndex){
             userScore++;
-        } else{ 
+            scoreParaEl.style.color = "#009432";
+            setTimeout(function(){
+                scoreParaEl.style.color = "black";
+            }, 600)
+
+        } else if (timeBarValue > 5000){ 
             timeBarValue-= 5000;
             timeRemaining -= 5000;
             TIME_BAR_ELEMENT.value = timeBarValue;
             TIME_REMAINING_ELEMENT.textContent = Math.round(timeRemaining / 1000);
+            scoreParaEl.style.color = "#EA2027";
+            setTimeout(function(){
+                scoreParaEl.style.color = "black";
+            }, 600)
+        } else{
+            timeBarValue = 0;
+            timeRemaining = 0;
+            TIME_BAR_ELEMENT.value = timeBarValue;
+            TIME_REMAINING_ELEMENT.textContent = timeRemaining;
+            scoreParaEl.style.color = "#EA2027";
+            setTimeout(function(){
+                scoreParaEl.style.color = "black";
+            }, 600)
         };
 
         if (currentQuestionIndex === QUIZ.length-1){
@@ -108,7 +131,7 @@ function userGuess(event){
     };
 }
 
-function finishQuiz(){
+function finishQuiz(timeBarValue){
     // Display for finishing the quiz
     fadeOut(QUIZ_CONTAINER);
     clearInterval(timer);
@@ -159,8 +182,12 @@ function finishQuiz(){
     document.body.appendChild(finishedContainer);
 
     let finishedHeader = document.createElement("h2");
-    finishedHeader.textContent = "Finished"
+    finishedHeader.textContent = "Quiz Finished!"
     finishedContainer.appendChild(finishedHeader);
+
+    if (timeBarValue <= 0){
+        finishedHeader.textContent = "You ran out of time!"
+    }
 
     let finishedPara = document.createElement("p");
     finishedPara.textContent = `Your score of ${userScore}/${QUIZ.length} has been added to the high scores!`;
@@ -269,6 +296,7 @@ function viewScores(){
     let returnButton = document.createElement("button");
     returnButton.setAttribute("type", "button");
     returnButton.setAttribute("class", "return");
+    returnButton.setAttribute("id", "return_btn");
     returnButton.textContent = "Return";
 
     tableEl.appendChild(tableBody);
@@ -290,8 +318,7 @@ function returnHome(){
         table.remove();
     }
 
-    let returnButton = document.querySelector(".return");
-    returnButton.remove();
+
 
     setTimeout(fadeIn, 600, INIT_CONTAINER);
 
@@ -302,8 +329,9 @@ function returnHome(){
     TIME_REMAINING_ELEMENT.textContent = timeRemaining/1000;
     setTimeout(fadeIn, 600, PROGRESS_DIV);
 
-
-}
+    returnButton = document.querySelector("#return_btn");
+    returnButton.remove();
+};
 
 
 

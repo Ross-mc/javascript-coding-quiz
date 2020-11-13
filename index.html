@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Oxygen&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/style.css">
     <title>Coding Quiz</title>
 </head>
 <body>
     <div class="container" id="init">
         <h1>JavaScript Coding Quiz</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis eveniet porro enim iste quibusdam adipisci sint exercitationem distinctio dolor aperiam laborum nulla maiores hic, temporibus eum qui corrupti repellendus vel.</p>
+        <p>This Quiz will test your JavaScript knowledge to see how you are progessing as a programmer!</p>
+        <img src="assets/laptop.jpg" alt="A laptop showing JavaScript programming" id="responsive-img"><br>
         <input type="text" id="name" placeholder="Please Enter Your Initials"><br>
         <button type="button" id="start_quiz">Begin!</button>
     </div>
@@ -20,7 +23,7 @@
         <p id="score_para"></p>
     </div>
     <div class="progress">
-        <progress id="time_bar" value ="60000" max="60000" style="width: 1000px;"></progress>
+        <progress id="time_bar" value ="60000" max="60000"></progress>
         <label for="time_bar" id="time_label">60</label>
     </div>
 

@@ -1,14 +1,76 @@
 body{
     padding: 10px;
+    font-size: 16px;
+    font-family: 'Oxygen', sans-serif;
+    position: relative;
+}
+
+p{
+    font-weight: 700;
 }
 
 
 .container{
-
+    width: 90%;
+    text-align: center;
+    margin: 0 auto;
 }
 
 #init{
 
+}
+
+#responsive-img{
+    max-width: 80%;
+    height: auto;
+    border-radius: 4px;
+}
+
+#progress{
+    position: relative;
+    left: -50%;
+    transform: translateX(-50%);
+}
+
+#time_bar{
+    position: relative;
+    left: 45%;
+    transform: translateX(-45%);
+}
+
+progress {
+    background: transparent;
+    }
+progress::-webkit-progress-bar {
+    background: transparent;
+    }
+progress::-webkit-progress-value {
+    background-color: #4834d4;
+
+    } 
+progress::-moz-progress-bar {
+    background-color: #4834d4;
+
+}
+
+button{
+    background-color: #4834d4;
+    color: white;
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 1vh;
+    display: block;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 10vw;
+
+}
+
+#time_label{
+    position: relative;
+    left: 25%;
 }
 
 #quiz{
