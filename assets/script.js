@@ -23,10 +23,11 @@ let scores = [];
 
 const INIT_CONTAINER = document.querySelector("#init");
 const BEGIN_BUTTON = document.querySelector("#start_quiz");
-const USER_NAME_EL = document.querySelector("#name")
+const USER_NAME_EL = document.querySelector("#name");
 
 const QUIZ_CONTAINER = document.querySelector("#quiz");
 const SCORE_CONTAINER = document.querySelector("#score");
+const PROGRESS_DIV = document.querySelector(".progress");
 
 const TIME_BAR_ELEMENT = document.querySelector("#time_bar");
 const TIME_REMAINING_ELEMENT = document.querySelector("#time_label");
@@ -35,10 +36,13 @@ const TIME_REMAINING_ELEMENT = document.querySelector("#time_label");
 //variables
 
 let timeBarValue = TIME_BAR_ELEMENT.value;
+const STORED_TIME_VALUE = timeBarValue;
 let timeRemaining = parseInt(TIME_REMAINING_ELEMENT.textContent)*1000;
 
 let currentQuestionIndex = 0;
 let userScore = 0;
+
+var timer;
 
 //functions
 
@@ -53,11 +57,12 @@ function beginQuiz(event){
     createAnswers(currentQuestionIndex);
     updateScore();
     setTimeout(fadeIn, 600, QUIZ_CONTAINER);
+    setTimeout(fadeIn, 600, SCORE_CONTAINER);
 
-    let timer = setInterval(function(){
+    timer = setInterval(function(){
 
         timeBarValue -= 20;
-        TIME_BAR_ELEMENT.value = timeBarValue;        
+        TIME_BAR_ELEMENT.value = timeBarValue;      
         
         timeRemaining -= 20;
         if (timeRemaining % 1000 === 0){
@@ -87,15 +92,12 @@ function userGuess(event){
         if (currentQuestionIndex === QUIZ.length-1){
             finishQuiz();
             return;
-
-        }
+        };
 
         fadeOut(QUIZ_CONTAINER);
 
         currentQuestionIndex++;
         updateScore();
-
-
 
         setTimeout(function(){
             QUIZ_CONTAINER.innerHTML = "";
@@ -104,13 +106,12 @@ function userGuess(event){
             createAnswers(currentQuestionIndex);
         }, 600);
     };
-
-    
 }
 
 function finishQuiz(){
     // Display for finishing the quiz
     fadeOut(QUIZ_CONTAINER);
+    clearInterval(timer);
 
     //reset the quiz
     QUIZ_CONTAINER.innerHTML = "";
@@ -173,12 +174,11 @@ function finishQuiz(){
 
     let returnButton = document.createElement("button");
     returnButton.setAttribute("type", "button");
-    returnButton.setAttribute("id", "view_scores");
+    returnButton.setAttribute("class", "return");
     returnButton.textContent = "Return";
     finishedContainer.appendChild(returnButton);
     
 
-    return;
 }
 
 function updateScore(){
@@ -203,7 +203,6 @@ function createQuestion(currentQuestionIndex){
 
     QUIZ_CONTAINER.appendChild(questionEl);
 
-
 }
 
 function createAnswers(currentQuestionIndex){
@@ -218,8 +217,93 @@ function createAnswers(currentQuestionIndex){
         answerButton.textContent = answer;
         QUIZ_CONTAINER.appendChild(answerButton); 
     };
-
 };
+
+function viewScores(){
+    fadeOut(SCORE_CONTAINER);
+    fadeOut(PROGRESS_DIV);
+    let finished = document.getElementById("finished_quiz");
+    finished.remove();
+
+    //creating a highscores table
+
+    let tableEl = document.createElement("table");
+    tableEl.setAttribute("id", "high_scores_table");
+
+    //creating the header
+
+    let tableHead = document.createElement("thead");
+    let tableRow = document.createElement("tr");
+    let subHead = document.createElement("th");
+    subHead.setAttribute("colspan", "2");
+    subHead.textContent = "Highscores";
+    tableRow.appendChild(subHead);
+    tableHead.appendChild(tableRow);
+
+    tableEl.appendChild(tableHead);
+
+
+    //creating the body
+
+    let tableBody = document.createElement("tbody");
+    let tableData = document.createElement("td");
+    let bodyRow = document.createElement("tr")
+    tableData.textContent = "Player";
+    bodyRow.appendChild(tableData);
+    tableData = document.createElement("td");
+    tableData.textContent = "Score";
+    bodyRow.appendChild(tableData);
+    tableBody.appendChild(bodyRow);
+
+    for (let i = 0; i<scores.length && i<10; i++){
+        let tableRow = document.createElement("tr");
+        let userEl = document.createElement("td");
+        userEl.textContent = `${i+1}: ${scores[i].user}`;
+        tableRow.appendChild(userEl);
+        let scoresEl = document.createElement("td");
+        scoresEl.textContent = scores[i].score;
+        tableRow.appendChild(scoresEl);
+        tableBody.appendChild(tableRow);
+    }
+
+    let returnButton = document.createElement("button");
+    returnButton.setAttribute("type", "button");
+    returnButton.setAttribute("class", "return");
+    returnButton.textContent = "Return";
+
+    tableEl.appendChild(tableBody);
+    document.body.appendChild(tableEl);
+    document.body.appendChild(returnButton);
+
+}
+
+function returnHome(){
+    fadeOut(SCORE_CONTAINER);
+    fadeOut(PROGRESS_DIV);
+    let finished = document.getElementById("finished_quiz");
+    if (finished){
+        finished.remove();
+    };
+
+    let table = document.querySelector("#high_scores_table");
+    if (table){
+        table.remove();
+    }
+
+    let returnButton = document.querySelector(".return");
+    returnButton.remove();
+
+    setTimeout(fadeIn, 600, INIT_CONTAINER);
+
+    timeBarValue = STORED_TIME_VALUE;
+    timeRemaining = STORED_TIME_VALUE;
+
+    TIME_BAR_ELEMENT.value = timeBarValue;
+    TIME_REMAINING_ELEMENT.textContent = timeRemaining/1000;
+    setTimeout(fadeIn, 600, PROGRESS_DIV);
+
+
+}
 
 
 
@@ -262,5 +346,17 @@ function fadeIn(element){
 BEGIN_BUTTON.addEventListener("click", beginQuiz);
 
 QUIZ_CONTAINER.addEventListener("click", userGuess);
+
+
+//for dynamically created elements
+document.addEventListener("click", function(event){
+    if (event.target && event.target.id === "view_scores"){
+        viewScores();
+    } else if (event.target && event.target.className === "return"){
+        returnHome();
+    }
+});
+
+
 
 
