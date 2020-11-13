@@ -48,7 +48,7 @@ const QUIZ = [
     },
     {
         question: "Which of these would return true?",
-        possibleAnswers: ["0 == false", "1<0", "!true", "false === false"],
+        possibleAnswers: ["0 == false", "1<0", "!true", "false !== false"],
         correctAnswerIndex: 0
     },
 
