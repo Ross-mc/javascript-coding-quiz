@@ -7,10 +7,51 @@ const QUIZ = [
         correctAnswerIndex: 3
     },
     {
-        question: "Test Question 2",
-        possibleAnswers: ["1", "2", "3", "4"],
+        question: "Which of these is NOT a JavaScript datatype?",
+        possibleAnswers: ["Number", "Boolean", "String", "Float"],
         correctAnswerIndex: 3
     },
+    {
+        question: "Which of these methods would display a message to the user?",
+        possibleAnswers: ["confirm()", "prompt()", "alert()", "console.log()"],
+        correctAnswerIndex: 2
+    },
+    {
+        question: "Using JavaScript, if I added the String \"1\" to the Number 1, what would my result be?",
+        possibleAnswers: ["\"11\"", "11", "2", "\"2\""],
+        correctAnswerIndex: 0
+    },
+    {
+        question: "Using JavaScript, if I added the Number 0.1 to the Number 0.2, what would my result be?",
+        possibleAnswers: ["\"0.21\"", "0.3", "0.30000000000000004", "\"0.3\""],
+        correctAnswerIndex: 2
+    },
+    {
+        question: "When a function is a property of an Object, it is properly known as a ...?",
+        possibleAnswers: ["object.function", "method", "property.function", "functionalObject"],
+        correctAnswerIndex: 1
+    },
+    {
+        question: "Which of these is NOT used for variable declaration in JavaScript?",
+        possibleAnswers: ["var", "let", "init", "const"],
+        correctAnswerIndex: 2
+    },
+    {
+        question: "How would you reference the second element, in an Array called myArr which is a property of the Object myObj?",
+        possibleAnswers: ["myObj[myArr].2", "myObj.myArr[1]", "myObj[myArr].1", "myObj.myArr[2]"],
+        correctAnswerIndex: 1
+    },
+    {
+        question: "JavaScript uses comparison operators. One such operator is \"===\". What does this mean?",
+        possibleAnswers: ["It assigns a value to a variable", "It checks if two variables are not equal", "It checks whether two variables are strictly equal", "It checks whether two variables are loosely equal"],
+        correctAnswerIndex: 2
+    },
+    {
+        question: "Which of these would return true?",
+        possibleAnswers: ["0 == false", "1<0", "!true", "false === false"],
+        correctAnswerIndex: 0
+    },
+
 
 ];
 
@@ -50,6 +91,11 @@ var timer;
 
 function beginQuiz(event){
     event.preventDefault();
+
+    if (USER_NAME_EL.value.length === 0 || USER_NAME_EL.value.length > 4){
+        alert('Please enter your initials (maximum of 4 characters)');
+        return;
+    }
 
     currentQuestionIndex = 0;
     userScore = 0;  
@@ -92,9 +138,9 @@ function userGuess(event){
                 scoreParaEl.style.color = "black";
             }, 600)
 
-        } else if (timeBarValue > 5000){ 
-            timeBarValue-= 5000;
-            timeRemaining -= 5000;
+        } else if (timeBarValue > 10000){ 
+            timeBarValue-= 10000;
+            timeRemaining -= 10000;
             TIME_BAR_ELEMENT.value = timeBarValue;
             TIME_REMAINING_ELEMENT.textContent = Math.round(timeRemaining / 1000);
             scoreParaEl.style.color = "#EA2027";
@@ -113,6 +159,7 @@ function userGuess(event){
         };
 
         if (currentQuestionIndex === QUIZ.length-1){
+            updateScore();
             finishQuiz();
             return;
         };
