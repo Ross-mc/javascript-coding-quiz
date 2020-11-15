@@ -16,9 +16,6 @@ p{
     margin: 0 auto;
 }
 
-#init{
-
-}
 
 #responsive-img{
     max-width: 80%;
@@ -65,7 +62,18 @@ button{
     left: 50%;
     transform: translateX(-50%);
     min-width: 10vw;
+}
 
+button:hover{
+    background-color: #6a5bce; 
+}
+
+#quiz > button{
+    left: 5%;
+    width: 50vw;
+    text-align: left;
+    padding-left: 4vw;
+    transform: translateX(0);
 }
 
 #time_label{
@@ -75,5 +83,12 @@ button{
 
 #quiz{
     display: none;
-};
+}
+
+@media(min-width: 769px){
+    #time_label{
+        position: relative;
+        left: 40%;
+    }
+}
 

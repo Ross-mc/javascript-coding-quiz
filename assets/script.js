@@ -347,12 +347,13 @@ function viewScores(){
     returnButton.textContent = "Return";
 
     tableEl.appendChild(tableBody);
+    tableEl.appendChild(returnButton)
     document.body.appendChild(tableEl);
-    document.body.appendChild(returnButton);
 
 }
 
 function returnHome(){
+    console.log("in to return statement")
     fadeOut(SCORE_CONTAINER);
     fadeOut(PROGRESS_DIV);
     let finished = document.getElementById("finished_quiz");
@@ -363,7 +364,7 @@ function returnHome(){
     let table = document.querySelector("#high_scores_table");
     if (table){
         table.remove();
-    }
+    };
 
 
 
@@ -375,9 +376,6 @@ function returnHome(){
     TIME_BAR_ELEMENT.value = timeBarValue;
     TIME_REMAINING_ELEMENT.textContent = timeRemaining/1000;
     setTimeout(fadeIn, 600, PROGRESS_DIV);
-
-    returnButton = document.querySelector("#return_btn");
-    returnButton.remove();
 };
 
 
