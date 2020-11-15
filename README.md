@@ -8,7 +8,7 @@ The quiz is timed and any incorrect questions will result in the timer being dec
 
 ## Live page
 
-The password generator is available [here](https://ross-mc.github.io/javascript-coding-quiz/)
+The coding quiz page is available [here](https://ross-mc.github.io/javascript-coding-quiz/)
 
 ## Screenshots
 
