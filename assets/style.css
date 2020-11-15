@@ -69,11 +69,9 @@ button:hover{
 }
 
 #quiz > button{
-    left: 5%;
     width: 50vw;
     text-align: left;
     padding-left: 4vw;
-    transform: translateX(0);
 }
 
 #time_label{
@@ -85,10 +83,70 @@ button:hover{
     display: none;
 }
 
-@media(min-width: 769px){
+table{
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+  
+th, td {
+    padding: 10px;
+    width: 100px;
+}
+
+@media(min-width: 400px){
+    #time_label{
+        position: relative;
+        left: 30%;
+    }
+}
+
+@media(min-width: 500px){
+    #time_label{
+        position: relative;
+        left: 35%;
+    }
+}
+
+@media(min-width: 700px){
     #time_label{
         position: relative;
         left: 40%;
     }
+
+    #quiz > button{
+        left: 50%;
+        width: 25vw;
+        text-align: left;
+        padding-left: 1vw;
+        transform: translateX(-50%);
+    }
 }
+
+@media(min-width: 1200px){
+    #time_label{
+        position: relative;
+        left: 45%;
+    }
+
+    #time_bar{
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+@media(min-width: 1600px){
+    #time_label{
+        position: relative;
+        left: 47%;
+    }
+
+}
+
+
 

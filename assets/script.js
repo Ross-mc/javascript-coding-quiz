@@ -87,6 +87,8 @@ let userScore = 0;
 
 var timer;
 
+var cleared = false;
+
 //functions
 
 function beginQuiz(event){
@@ -298,6 +300,7 @@ function viewScores(){
     fadeOut(PROGRESS_DIV);
     let finished = document.getElementById("finished_quiz");
     finished.remove();
+    cleared = false;
 
     //creating a highscores table
 
@@ -346,25 +349,40 @@ function viewScores(){
     returnButton.setAttribute("id", "return_btn");
     returnButton.textContent = "Return";
 
+    let clearButton = document.createElement("button");
+    clearButton.setAttribute("type", "button");
+    clearButton.setAttribute("class", "clear");
+    clearButton.setAttribute("id", "clear_btn");
+    clearButton.textContent = "Clear Highscores";
+
     tableEl.appendChild(tableBody);
-    tableEl.appendChild(returnButton)
+    
     document.body.appendChild(tableEl);
+    document.body.appendChild(returnButton);
+    document.body.appendChild(clearButton);
 
 }
 
 function returnHome(){
-    console.log("in to return statement")
     fadeOut(SCORE_CONTAINER);
     fadeOut(PROGRESS_DIV);
     let finished = document.getElementById("finished_quiz");
     if (finished){
         finished.remove();
     };
+    let clearButton = document.querySelector("#clear_btn");
+    let returnButton = document.querySelector("#return_btn");
 
     let table = document.querySelector("#high_scores_table");
     if (table){
         table.remove();
+        returnButton.remove();
+        clearButton.remove();
     };
+
+    if (cleared){
+        returnButton.remove();
+    }
 
 
 
@@ -377,6 +395,15 @@ function returnHome(){
     TIME_REMAINING_ELEMENT.textContent = timeRemaining/1000;
     setTimeout(fadeIn, 600, PROGRESS_DIV);
 };
+
+function clearScores(){
+    let table = document.querySelector("#high_scores_table");
+    table.remove();
+    localStorage.clear();
+    let clearButton = document.querySelector("#clear_btn");
+    clearButton.remove();
+    cleared = true;
+}
 
 
 
@@ -427,6 +454,8 @@ document.addEventListener("click", function(event){
         viewScores();
     } else if (event.target && event.target.className === "return"){
         returnHome();
+    } else if (event.target && event.target.className === "clear"){
+        clearScores();
     }
 });
 
